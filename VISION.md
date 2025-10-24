@@ -2,21 +2,34 @@
 
 ## Problem Statement
 
-Currently, Roundtable skills are:
-- **Static** - Bundled at build time into applications
-- **Monolithic** - All skills deployed together
-- **Hard to Share** - No standard distribution mechanism
-- **Redundant** - Similar skills duplicated across projects
-- **Heavyweight** - Applications bloated with unused skills
+Currently, AI agent skills across the ecosystem are:
+- **Fragmented** - Each framework has its own skill format (Anthropic, OpenAI, Google, etc.)
+- **Not Discoverable** - No central registry to find and share skills across models
+- **Not Portable** - Skills lock you into a specific LLM provider
+- **Hard to Maintain** - No standardized versioning or dependency management
+- **Siloed** - Skills can't be reused across projects or organizations
+- **No Distribution Layer** - Anthropic has skills but no way to discover/share them
 
 ## Solution
 
-A package manager system that treats skills as first-class distributable components:
-- **Discoverable** - Search and find skills by capability
-- **Downloadable** - Install on-demand, not at build time
-- **Versioned** - Multiple versions coexist
-- **Community-Driven** - Anyone can publish skills
-- **Secure** - Registry can be public or private
+An open, vendor-agnostic skills package manager:
+- **Format-Agnostic** - Works with Claude skills, OpenAI tools, Google skills, etc.
+- **Discoverable** - Central registry to search, discover, and share skills
+- **Portable** - Skills can be used across different LLM providers
+- **Versioned** - Proper versioning, dependencies, and conflict resolution
+- **Open Standard** - Community-driven, not controlled by any single vendor
+- **Community-Driven** - Anyone can publish and discover skills
+- **Secure** - Package signing, verification, and optional sandboxing
+
+## Why Now?
+
+Anthropic released Claude Skills (Apache 2.0 open source) but **no distribution mechanism**. OpenAI will inevitably release their own format. The opportunity is to create an open standard NOW that can become the lingua franca for AI agent skills across all frameworks—similar to how npm became the standard for JavaScript packages.
+
+**Our competitive advantage:**
+- Build it first (before OpenAI, Google, Meta get organized)
+- Make it truly vendor-agnostic (not owned by any single LLM provider)
+- Lead the standard as it emerges (contribute to A2A, MCP, or create new standard)
+- Roundtable is the flagship use case that proves it works
 
 ## Core Concepts
 
@@ -86,28 +99,42 @@ const analysisExpert = await skillManager.install('data-analysis-expert@latest')
 
 ## Phases (Proposed)
 
-### Phase 1: Foundation
-- Skill packaging format
-- Basic registry (file-based or simple API)
-- CLI commands (install, search, list)
+### Phase 1: MVP - Roundtable + Claude Skills
+- Universal skill package format (SKILL.md + skill.yaml)
+- Claude Skills compatibility (native format, no conversion needed)
+- Basic registry API (search, install, list)
+- CLI commands for Roundtable
 - Local cache management
+- Package signing and verification
+- **Goal:** Roundtable can install and use Claude skills from public registry
 
-### Phase 2: Distribution
-- Production registry service
-- Public skill marketplace
-- Community publishing workflow
-- Versioning and dependency resolution
+### Phase 2: Format Adapters & Expansion
+- OpenAI tools format support (.skill/openai.json)
+- Google Vertex format support (.skill/google.json)
+- Framework detection and auto-format selection
+- Dependency resolution across frameworks
+- **Goal:** One skill package works across Claude, OpenAI, and Google ecosystems
 
-### Phase 3: Enterprise
-- Private registries
+### Phase 3: Distribution & Community
+- Production registry service (scalable API)
+- Public skill marketplace with search/discovery
+- Community publishing workflow (verified publishers)
+- Semantic versioning and dependency resolution
+- CDN for package delivery
+- **Goal:** Community can publish and discover skills worldwide
+
+### Phase 4: Enterprise & Standards Leadership
+- Private registries for organizations
 - RBAC (Role-Based Access Control)
-- Audit trails
+- Audit trails and compliance features
 - Enterprise skill bundles
+- Contribute to A2A or MCP standards
+- **Goal:** Enterprise adoption + position as reference implementation for open standards
 
-### Phase 4: Advanced
+### Phase 5: Ecosystem Leadership
+- Support for additional frameworks as they emerge
 - Skill composition and bundling
-- Performance optimization and CDN
-- Skill marketplace and ratings
+- Marketplace with ratings and recommendations
 - Advanced discovery (ML-based recommendations)
 
 ## Success Metrics
@@ -120,16 +147,19 @@ const analysisExpert = await skillManager.install('data-analysis-expert@latest')
 
 ## Open Questions
 
-- Should we fork/adapt existing package managers (npm, poetry) or build custom?
-- Public vs private registry strategy?
-- How to handle skill dependencies and version conflicts?
-- Security model for untrusted skills?
-- Monetization strategy (if any)?
-- Community governance model?
+- **Interop with Anthropic:** Will Anthropic support/endorse this approach? Should we contribute back to their skill system?
+- **Standard Leadership:** Should we help lead A2A protocol adoption, or propose a new open standard for skills?
+- **Framework Support Timeline:** Which frameworks should we support in Phase 2 (OpenAI, Google, others)?
+- **Governance:** Community governance model? Code of conduct? Verified publishers?
+- **Monetization:** Should premium skills be supported? Revenue sharing model?
+- **Security:** How strict should verification be? Risk vs usability tradeoff?
+- **Discoverability:** How do we ensure skills are findable without AI-generated spam?
 
 ## Related Concepts
 
-- **npm** - JavaScript package manager (model to potentially follow)
-- **PyPI** - Python package index
-- **Helm** - Kubernetes package manager (distribution model)
-- **Conda** - Package manager for data science
+- **npm** - JavaScript package manager (distribution/versioning model)
+- **PyPI** - Python package index (community publishing)
+- **Anthropic Skills** - Claude Skills format (Phase 1 compatibility)
+- **MCP (Model Context Protocol)** - Anthropic's open standard for tool/model integration
+- **A2A (Agent2Agent Protocol)** - Google's open standard for agent collaboration
+- **Helm** - Kubernetes package manager (registry and discovery patterns)

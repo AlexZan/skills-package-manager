@@ -1,16 +1,18 @@
 # Skills Package Manager
 
-A dynamic package manager system for Roundtable skills - enabling applications to search, discover, and download skills on-demand rather than bundling them statically.
+An open, vendor-agnostic package manager for AI agent skills. Works with Claude Skills, OpenAI tools, Google AI, and future frameworks - enabling applications to search, discover, and download skills on-demand.
 
 ## Vision
 
-Instead of embedding all skills into an application at build time, applications can:
-- **Search** for available skills
-- **Discover** new skills that match their needs
-- **Download** skills dynamically at runtime
-- **Install** skills into a central registry
+Create the "npm for AI agent skills" - an open standard and registry where:
+- Skills are **format-agnostic** (Claude, OpenAI, Google, etc. all work)
+- Developers can **search and discover** skills across the entire ecosystem
+- Skills are **portable** across different LLM providers
+- Skills have **proper versioning** and **dependency resolution**
+- Anyone can **publish and share** their skills
+- Organizations can run **private registries**
 
-This reduces application bundle size and enables a community-driven skills ecosystem.
+**Why this matters:** Anthropic released Claude Skills but no distribution mechanism. OpenAI will inevitably release their own format. The opportunity is to build the open standard NOW that becomes the lingua franca for AI agent skills—similar to how npm became the standard for JavaScript.
 
 ## Key Benefits
 
@@ -46,9 +48,23 @@ Skills are versioned and managed centrally
 
 ## Status
 
-🎯 **Concept Phase** - Vision captured, awaiting implementation
+🎯 **Research Complete, Planning Phase** - Market analysis and architecture design done
 
-This is a future project anchored for reference. See main [Roundtable CLI](https://github.com/AlexZan/roundtable-cli) project for current work.
+**Market Research Findings:**
+- Anthropic Skills exist (Apache 2.0) but have no public distribution/registry
+- A2A (Agent2Agent) protocol exists (Google, Apache 2.0) for agent collaboration
+- MCP (Model Context Protocol) exists (Anthropic) for tool/model integration
+- No vendor-neutral skills registry exists yet
+- OpenAI/Google haven't released their skill formats publicly yet
+- **Window of opportunity is NOW** - build before vendors standardize individually
+
+**Strategic Approach:**
+1. Start with Claude Skills compatibility (Phase 1)
+2. Add OpenAI/Google support as they release formats (Phase 2)
+3. Contribute to/lead standards discussions (A2A, MCP, or new standard)
+4. Use Roundtable as flagship proof-of-concept
+
+Implementation begins after Roundtable MVP completion. See main [Roundtable CLI](https://github.com/AlexZan/roundtable-cli) for current work.
 
 ## Related Documentation
 

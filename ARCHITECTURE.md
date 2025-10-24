@@ -33,46 +33,99 @@
 
 ### 1. Skill Package Format
 
+**Universal format** that works with multiple LLM skill systems. Based on Anthropic's Claude Skills but extensible.
+
 **Structure:**
 ```
-skill-name-1.0.0.spm (Skill Package Manager file)
-├── skill.yaml                 # Metadata
+skill-name-1.0.0.spm (Skill Package file)
+├── SKILL.md                   # Universal metadata (Claude Skills compatible)
+├── skill.yaml                 # Extended metadata (for versioning, dependencies)
 ├── src/
-│   ├── skill.ts              # Main implementation
-│   ├── agent.ts              # Agent definition
-│   └── types.ts              # TypeScript types
+│   ├── skill.ts              # TypeScript implementation (if applicable)
+│   ├── instructions.md       # Claude-compatible instructions
+│   ├── agent.ts              # Agent definition (if applicable)
+│   └── types.ts              # TypeScript types (if applicable)
 ├── tests/
 │   └── skill.test.ts         # Tests
 ├── docs/
 │   ├── README.md
 │   └── EXAMPLES.md
+├── .skill/
+│   ├── openai.json           # OpenAI tools format (if provided)
+│   └── anthropic.json        # Anthropic metadata (optional)
 └── LICENSE
 ```
 
-**Metadata (skill.yaml):**
+**Primary Metadata (SKILL.md - Claude Skills Compatible):**
+```markdown
+---
+name: data-analysis-expert
+description: Expert system for data analysis and visualization
+version: 1.0.0
+author: roundtable-community
+---
+
+## Instructions
+
+[Claude skill instructions per Anthropic's standard]
+[This section is used directly by Claude]
+```
+
+**Extended Metadata (skill.yaml - Package Manager Standard):**
 ```yaml
+# Universal skill metadata
 name: data-analysis-expert
 version: 1.0.0
 description: Expert for data analysis and visualization tasks
 author: roundtable-community
 license: MIT
+repository: https://github.com/roundtable-community/data-analysis-expert
+homepage: https://github.com/roundtable-community/data-analysis-expert
+
+# Tagging and discovery
 tags:
   - data-science
   - analytics
   - visualization
-homepage: https://github.com/roundtable-community/data-analysis-expert
-repository: https://github.com/roundtable-community/data-analysis-expert
-roundtable:
-  min-version: 2.0.0
-  max-version: 3.x.x
-dependencies:
-  pandas: ">=1.0.0"
 capabilities:
   - data-loading
   - analysis
   - visualization
+
+# Framework compatibility
+frameworks:
+  - name: anthropic-claude
+    compatibility: ">=2.0.0"
+    instructions-file: SKILL.md
+  - name: openai
+    compatibility: ">=1.0.0"
+    instructions-file: .skill/openai.json
+  - name: roundtable
+    compatibility: ">=1.0.0"
+
+# Dependencies
+dependencies:
+  roundtable: ">=1.0.0"
+  python:
+    pandas: ">=1.0.0"
+
+# Package verification
 checksum: sha256:abc123...
+signing:
+  algorithm: gpg
+  public-key-id: "0x1234ABCD"
 ```
+
+**Framework Adapters:**
+
+Different LLM frameworks use different formats. The package includes adapters:
+
+- **Claude Skills:** Native SKILL.md (Anthropic standard)
+- **OpenAI:** JSON schema in `.skill/openai.json`
+- **Google Vertex:** JSON schema in `.skill/google.json`
+- **Roundtable:** TypeScript implementation in `src/`
+
+The system automatically detects which framework is requesting the skill and provides the appropriate format.
 
 ### 2. Registry Service API
 
